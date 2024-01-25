@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RECONOCIMIENTO FACIAL</title>
+
+    <!-- Agregamos Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('tu-imagen-de-fondo.jpg'); /* Reemplaza 'tu-imagen-de-fondo.jpg' con la ruta de tu imagen */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            margin-top: 20px;
+            margin-bottom: 40px;
+            color: #007bff; /* Color azul de Bootstrap */
+        }
+
+        form {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+
+        #video_feed {
+            width: 100%;
+            max-width: 640px;
+            height: auto;
+            border: 2px solid #333;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #28a745; /* Color verde de Bootstrap */
+            color: #fff; /* Texto blanco */
+        }
+    </style>
+</head>
+<body>
+<hr>
+<div class="container">
+    <h1 class="text-center">RECONOCIMIENTO FACIAL</h1>
+    <hr>
+    
+
+    <form action="/upload_image" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" class="form-control mb-2">
+        <button type="submit" class="btn btn-primary btn-block">SUBIR IMAGEN</button>
+        <hr>
+    </form>
+    
+
+    <img id="video_feed" src="{{ url_for('video_feed') }}" class="mb-3">
+
+    <button onclick="toggleRecognition()" class="btn btn-success btn-block">RECONOCER ROSTROS</button>
+</div>
+
+<!-- Agregamos Bootstrap JS y Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    function toggleRecognition() {
+        fetch('/toggle_recognition')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Reconocimiento activado: ' + data.recognizing);
+                }
+            });
+    }
+</script>
+
+</body>
+</html>
